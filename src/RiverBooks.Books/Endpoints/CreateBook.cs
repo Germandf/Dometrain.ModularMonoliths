@@ -1,8 +1,24 @@
 ﻿using FastEndpoints;
+using FluentValidation;
 
 namespace RiverBooks.Books.Endpoints;
 
 public record CreateBookRequest(string Title, string Author, decimal Price);
+
+public class CreateBookRequestValidator : Validator<CreateBookRequest>
+{
+    public CreateBookRequestValidator()
+    {
+        RuleFor(x => x.Title)
+            .NotEmpty();
+
+        RuleFor(x => x.Author)
+            .NotEmpty();
+
+        RuleFor(x => x.Price)
+            .GreaterThanOrEqualTo(0);
+    }
+}
 
 internal class CreateBook(IBookService bookService) : Endpoint<CreateBookRequest, BookDto>
 {

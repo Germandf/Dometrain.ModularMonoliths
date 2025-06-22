@@ -1,8 +1,19 @@
 ﻿using FastEndpoints;
+using FluentValidation;
 
 namespace RiverBooks.Books.Endpoints;
 
 public record DeleteBookRequest(Guid Id);
+
+public class DeleteBookRequestValidator : Validator<DeleteBookRequest>
+{
+    public DeleteBookRequestValidator()
+    {
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .NotEqual(Guid.Empty);
+    }
+}
 
 internal class DeleteBook(IBookService bookService) : Endpoint<DeleteBookRequest>
 {

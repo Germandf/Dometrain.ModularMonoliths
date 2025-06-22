@@ -1,8 +1,19 @@
 ﻿using FastEndpoints;
+using FluentValidation;
 
 namespace RiverBooks.Books.Endpoints;
 
 public record GetBookByIdRequest(Guid Id);
+
+public class GetBookByIdRequestValidator : Validator<GetBookByIdRequest>
+{
+    public GetBookByIdRequestValidator()
+    {
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .NotEqual(Guid.Empty);
+    }
+}
 
 internal class GetBookById(IBookService bookService) : Endpoint<GetBookByIdRequest, BookDto>
 {
