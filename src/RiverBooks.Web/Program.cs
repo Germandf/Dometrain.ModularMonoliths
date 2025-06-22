@@ -1,21 +1,34 @@
 using FastEndpoints;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using RiverBooks.Books;
+using RiverBooks.Users;
+using Serilog;
+
+var logger = Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
+
+logger.Information("Starting web host");
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog((ctx, _, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration));
+builder.Services.AddAuthenticationJwtBearer(o => o.SigningKey = builder.Configuration["Auth:JwtSecret"]);
+builder.Services.AddAuthorization();
 //builder.Services.AddOpenApi();
-builder.Services.AddBookServices(builder.Configuration);
-builder.Services.AddFastEndpoints()
-    .SwaggerDocument();
+builder.Services.AddFastEndpoints().SwaggerDocument();
+builder.Services.AddBookServices(builder.Configuration, logger);
+builder.Services.AddUsersModuleServices(builder.Configuration, logger);
 
 var app = builder.Build();
 
 //app.MapOpenApi();
 //app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "Demo Api"));
-app.UseHttpsRedirection();
-app.UseFastEndpoints()
-   .UseSwaggerGen();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseFastEndpoints().UseSwaggerGen();
 
 app.Run();
 
