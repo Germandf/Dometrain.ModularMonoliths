@@ -18,3 +18,5 @@ app.UseFastEndpoints()
    .UseSwaggerGen();
 
 app.Run();
+
+public partial class Program { }
