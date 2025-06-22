@@ -1,8 +1,10 @@
 ﻿using FastEndpoints;
 
-namespace RiverBooks.Books;
+namespace RiverBooks.Books.Endpoints;
 
-internal class ListBooksEndpoint(IBookService bookService) : EndpointWithoutRequest<ListBooksResponse>
+public record ListBooksResponse(List<BookDto> Books);
+
+internal class ListBooks(IBookService bookService) : EndpointWithoutRequest<ListBooksResponse>
 {
     public override void Configure()
     {
@@ -13,9 +15,6 @@ internal class ListBooksEndpoint(IBookService bookService) : EndpointWithoutRequ
     public override async Task HandleAsync(CancellationToken ct)
     {
         var books = await bookService.ListBooksAsync();
-        await SendAsync(new ListBooksResponse
-        {
-            Books = books
-        });
+        await SendAsync(new ListBooksResponse(books));
     }
 }

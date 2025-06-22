@@ -1,8 +1,10 @@
 ﻿using FastEndpoints;
 
-namespace RiverBooks.Books;
+namespace RiverBooks.Books.Endpoints;
 
-internal class CreateBookEndpoint(IBookService bookService) : Endpoint<CreateBookRequest, BookDto>
+public record CreateBookRequest(string Title, string Author, decimal Price);
+
+internal class CreateBook(IBookService bookService) : Endpoint<CreateBookRequest, BookDto>
 {
     public override void Configure()
     {
@@ -14,6 +16,6 @@ internal class CreateBookEndpoint(IBookService bookService) : Endpoint<CreateBoo
     {
         var newBook = new BookDto(Guid.NewGuid(), req.Title, req.Author, req.Price);
         await bookService.CreateBookAsync(newBook);
-        await SendCreatedAtAsync<GetBookByIdEndpoint>(new { newBook.Id }, newBook, cancellation: ct);
+        await SendCreatedAtAsync<GetBookById>(new { newBook.Id }, newBook, cancellation: ct);
     }
 }
