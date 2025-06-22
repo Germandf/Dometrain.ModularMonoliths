@@ -4,7 +4,7 @@ using RiverBooks.Books;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
-builder.Services.AddBookServices();
+builder.Services.AddBookServices(builder.Configuration);
 builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
