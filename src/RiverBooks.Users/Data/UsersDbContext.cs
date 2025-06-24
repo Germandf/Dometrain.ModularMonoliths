@@ -6,7 +6,7 @@ namespace RiverBooks.Users.Data;
 
 public class UsersDbContext(DbContextOptions<UsersDbContext> options) : IdentityDbContext(options)
 {
-    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    internal DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
