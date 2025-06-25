@@ -18,9 +18,12 @@ internal class CartItem
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
 
-    internal void UpdateQuantity(int quantity)
-    {
-        Guard.Against.Negative(quantity);
-        Quantity = quantity;
-    }
+    internal void UpdateDescription(string description) =>
+        Description = Guard.Against.NullOrEmpty(description);
+
+    internal void UpdateQuantity(int quantity) =>
+        Quantity = Guard.Against.Negative(quantity);
+
+    internal void UpdateUnitPrice(decimal unitPrice) =>
+        UnitPrice = Guard.Against.Negative(unitPrice);
 }

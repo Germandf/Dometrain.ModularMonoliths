@@ -15,8 +15,15 @@ internal class ApplicationUser : IdentityUser
         Guard.Against.Null(item);
         var existingItem = _cartItems.FirstOrDefault(ci => ci.BookId == item.BookId);
         if (existingItem is not null)
-            existingItem.UpdateQuantity(existingItem.Quantity + item.Quantity);
+            UpdateExistingItem(existingItem, item);
         else
             _cartItems.Add(item);
+    }
+
+    private void UpdateExistingItem(CartItem existingItem, CartItem item)
+    {
+        existingItem.UpdateDescription(item.Description);
+        existingItem.UpdateQuantity(existingItem.Quantity + item.Quantity);
+        existingItem.UpdateUnitPrice(item.UnitPrice);
     }
 }
