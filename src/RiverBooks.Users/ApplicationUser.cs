@@ -10,6 +10,9 @@ internal class ApplicationUser : IdentityUser
     private readonly List<CartItem> _cartItems = new();
     public IReadOnlyCollection<CartItem> CartItems => _cartItems.AsReadOnly();
 
+    private readonly List<UserAddress> _addresses = new();
+    public IReadOnlyCollection<UserAddress> Addresses => _addresses.AsReadOnly();
+
     public void AddItemToCart(CartItem item)
     {
         Guard.Against.Null(item);
@@ -30,5 +33,16 @@ internal class ApplicationUser : IdentityUser
     internal void ClearCart()
     {
         _cartItems.Clear();
+    }
+
+    internal UserAddress AddAddress(Address address)
+    {
+        Guard.Against.Null(address);
+        var existingAddress = _addresses.SingleOrDefault(a => a.Address == address);
+        if (existingAddress is not null)
+            return existingAddress;
+        var newAddress = new UserAddress(Id, address);
+        _addresses.Add(newAddress);
+        return newAddress;
     }
 }
