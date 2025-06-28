@@ -1,6 +1,7 @@
 using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
+using NJsonSchema;
 using RiverBooks.Books;
 using RiverBooks.OrderProcessing;
 using RiverBooks.Users;
@@ -33,7 +34,21 @@ var app = builder.Build();
 //app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "Demo Api"));
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseFastEndpoints().UseSwaggerGen(null, x => x.DocExpansion = "list");
+app.UseFastEndpoints().UseSwaggerGen(
+    settings =>
+    {
+        settings.PostProcess = (doc, req) =>
+        {
+            foreach (var schema in doc.Definitions.Values)
+                foreach (var prop in schema.Properties.Values)
+                    if (prop.Type is JsonObjectType.String && prop.Format is JsonFormatStrings.Guid && prop.Example is null)
+                        prop.Example = Guid.NewGuid().ToString();
+        };
+    },
+    settings =>
+    {
+        settings.DocExpansion = "list";
+    });
 
 app.Run();
 

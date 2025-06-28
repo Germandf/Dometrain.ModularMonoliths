@@ -26,4 +26,9 @@ internal class ApplicationUser : IdentityUser
         existingItem.UpdateQuantity(existingItem.Quantity + item.Quantity);
         existingItem.UpdateUnitPrice(item.UnitPrice);
     }
+
+    internal void ClearCart()
+    {
+        _cartItems.Clear();
+    }
 }
