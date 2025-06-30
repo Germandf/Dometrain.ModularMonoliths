@@ -4,7 +4,7 @@ using RiverBooks.OrderProcessing.Contracts;
 
 namespace RiverBooks.OrderProcessing.Integrations;
 
-internal class CreateOrderHandler(IOrderRepository orderRepository) : IRequestHandler<CreateOrderCommand, Result<OrderDetailsResponse>>
+internal class CreateOrderHandler(IOrderRepository orderRepository, IAddressCache addressCache) : IRequestHandler<CreateOrderCommand, Result<OrderDetailsResponse>>
 {
     public async Task<Result<OrderDetailsResponse>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
@@ -16,9 +16,8 @@ internal class CreateOrderHandler(IOrderRepository orderRepository) : IRequestHa
                 item.UnitPrice))
             .ToList();
 
-        // TODO: Retrieve real addresses
-        var shippingAddress = new Address("123 Main", "", "Kent", "OH", "44444", "USA");
-        var billingAddress = shippingAddress;
+        var shippingAddress = await addressCache.GetByIdAsync(request.ShippingAddressId);
+        var billingAddress = await addressCache.GetByIdAsync(request.BillingAddressId);
 
         var order = Order.Factory.Create(
             request.UserId,
