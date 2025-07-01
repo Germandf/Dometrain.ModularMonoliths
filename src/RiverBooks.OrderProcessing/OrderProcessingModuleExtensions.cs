@@ -18,7 +18,8 @@ public static class OrderProcessingModuleExtensions
         services.AddDbContext<OrderProcessingDbContext>(o => o
             .UseSqlServer(configuration.GetConnectionString("OrderProcessingConnectionString")));
         services.AddScoped<IOrderRepository, OrderRepository>();
-        services.AddScoped<IAddressCache, AddressCache>();
+        services.AddScoped<RedisAddressCache>();
+        services.AddScoped<IAddressCache, ReadThroughAddressCache>();
         mediatRAssemblies.Add(typeof(OrderProcessingModuleExtensions).Assembly);
         logger.Information("{Module} module services registered", "OrderProcessing");
         return services;

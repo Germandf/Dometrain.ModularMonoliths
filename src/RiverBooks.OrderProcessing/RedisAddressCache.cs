@@ -4,11 +4,11 @@ using System.Text.Json;
 
 namespace RiverBooks.OrderProcessing;
 
-internal class AddressCache : IAddressCache
+internal class RedisAddressCache : IAddressCache
 {
     private readonly IDatabase _db;
 
-    public AddressCache()
+    public RedisAddressCache()
     {
         var redis = ConnectionMultiplexer.Connect("localhost");
         _db = redis.GetDatabase();
