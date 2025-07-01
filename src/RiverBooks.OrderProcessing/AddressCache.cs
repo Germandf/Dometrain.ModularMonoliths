@@ -24,4 +24,13 @@ internal class AddressCache : IAddressCache
             return Result.NotFound();
         return Result.Success(address);
     }
+
+    public async Task<Result> StoreAsync(Guid addressId, Address address)
+    {
+        var addressJson = JsonSerializer.Serialize(address);
+        var success = await _db.StringSetAsync(addressId.ToString(), addressJson);
+        if (success)
+            return Result.Success();
+        return Result.Error();
+    }
 }

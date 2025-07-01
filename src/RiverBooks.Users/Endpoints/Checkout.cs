@@ -26,6 +26,6 @@ internal class Checkout(IMediator mediator) : Endpoint<CheckoutRequest, Checkout
         if (result.Status is ResultStatus.Unauthorized)
             await SendUnauthorizedAsync();
         else
-            await SendOkAsync();
+            await SendOkAsync(new CheckoutResponse(result.Value), ct);
     }
 }

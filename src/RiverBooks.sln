@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverBooks.OrderProcessing"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverBooks.OrderProcessing.Contracts", "RiverBooks.OrderProcessing.Contracts\RiverBooks.OrderProcessing.Contracts.csproj", "{EF0B2903-B138-49B8-895A-52D8C881D8A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverBooks.Users.Contracts", "RiverBooks.Users.Contracts\RiverBooks.Users.Contracts.csproj", "{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{EF0B2903-B138-49B8-895A-52D8C881D8A9}.Release|x64.Build.0 = Release|Any CPU
 		{EF0B2903-B138-49B8-895A-52D8C881D8A9}.Release|x86.ActiveCfg = Release|Any CPU
 		{EF0B2903-B138-49B8-895A-52D8C881D8A9}.Release|x86.Build.0 = Release|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Debug|x64.Build.0 = Debug|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Debug|x86.Build.0 = Debug|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Release|x64.ActiveCfg = Release|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Release|x64.Build.0 = Release|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Release|x86.ActiveCfg = Release|Any CPU
+		{A77DC32D-FF88-4C59-9CAB-1197D0508CD9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

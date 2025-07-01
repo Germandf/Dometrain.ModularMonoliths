@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace RiverBooks.Users;
 
-internal class ApplicationUser : IdentityUser
+internal class ApplicationUser : IdentityUser, IHaveDomainEvents
 {
     public string? FullName { get; set; }
 
@@ -12,6 +12,9 @@ internal class ApplicationUser : IdentityUser
 
     private readonly List<UserAddress> _addresses = new();
     public IReadOnlyCollection<UserAddress> Addresses => _addresses.AsReadOnly();
+
+    private List<DomainEventBase> _domainEvents = new();
+    public IReadOnlyCollection<DomainEventBase> DomainEvents => _domainEvents.AsReadOnly();
 
     public void AddItemToCart(CartItem item)
     {
@@ -43,6 +46,19 @@ internal class ApplicationUser : IdentityUser
             return existingAddress;
         var newAddress = new UserAddress(Id, address);
         _addresses.Add(newAddress);
+        var domainEvent = new AddressAddedEvent(newAddress);
+        RegisterDomainEvent(domainEvent);
         return newAddress;
+    }
+
+    private void RegisterDomainEvent(AddressAddedEvent domainEvent)
+    {
+        Guard.Against.Null(domainEvent);
+        _domainEvents.Add(domainEvent);
+    }
+
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
     }
 }
