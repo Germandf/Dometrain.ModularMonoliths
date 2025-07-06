@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using Ardalis.Result.AspNetCore;
 using FastEndpoints;
 using MediatR;
 using RiverBooks.Users.UseCases;
@@ -23,6 +24,8 @@ internal class AddCartItem(IMediator mediator) : Endpoint<AddCartItemRequest>
         var result = await mediator.Send(command, ct);
         if (result.Status is ResultStatus.Unauthorized)
             await SendUnauthorizedAsync();
+        else if (result.Status is ResultStatus.Invalid)
+            await SendResultAsync(result.ToMinimalApiResult());
         else
             await SendOkAsync();
     }

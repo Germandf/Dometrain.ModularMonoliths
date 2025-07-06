@@ -1,11 +1,13 @@
 using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
+using FluentValidation;
 using NJsonSchema;
 using RiverBooks.Books;
 using RiverBooks.OrderProcessing;
 using RiverBooks.SharedKernel;
 using RiverBooks.Users;
+using RiverBooks.Users.UseCases;
 using Serilog;
 using System.Reflection;
 
@@ -28,6 +30,9 @@ builder.Services.AddBooksModuleServices(builder.Configuration, logger, mediatRAs
 builder.Services.AddOrderProcessingModuleServices(builder.Configuration, logger, mediatRAssemblies);
 builder.Services.AddUsersModuleServices(builder.Configuration, logger, mediatRAssemblies);
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies.ToArray()));
+builder.Services.AddMediatRLoggingBehavior();
+builder.Services.AddMediatRValidationBehavior();
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(AddCartItemValidator));
 builder.Services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
 
 var app = builder.Build();
