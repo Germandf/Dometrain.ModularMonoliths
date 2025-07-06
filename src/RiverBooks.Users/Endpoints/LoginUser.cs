@@ -32,6 +32,7 @@ internal class LoginUser(UserManager<ApplicationUser> userManager) : Endpoint<Lo
         var jwtToken = JwtBearer.CreateToken(o =>
         {
             o.SigningKey = Config["Auth:JwtSecret"]!;
+            o.ExpireAt = DateTime.UtcNow.AddYears(1);
             o.User.Claims.Add(("EmailAddress", req.Email));
         });
         await SendAsync(jwtToken);
