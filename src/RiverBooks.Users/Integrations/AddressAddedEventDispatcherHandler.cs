@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using RiverBooks.Users.Contracts;
+using RiverBooks.Users.Domain;
 
 namespace RiverBooks.Users.Integrations;
 

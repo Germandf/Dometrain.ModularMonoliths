@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RiverBooks.Users.Data;
+using RiverBooks.Users.Domain;
+using RiverBooks.Users.Infrastructure.Data;
+using RiverBooks.Users.Interfaces;
 using Serilog;
 using System.Reflection;
 
@@ -21,7 +23,6 @@ public static class UsersModuleExtensions
             .AddEntityFrameworkStores<UsersDbContext>();
         services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
         services.AddScoped<IReadOnlyUserAddressRepository, ReadOnlyUserAddressRepository>();
-        services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
         mediatRAssemblies.Add(typeof(UsersModuleExtensions).Assembly);
         logger.Information("{Module} module services registered", "Users");
         return services;

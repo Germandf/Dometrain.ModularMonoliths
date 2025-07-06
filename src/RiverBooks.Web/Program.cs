@@ -4,6 +4,7 @@ using FastEndpoints.Swagger;
 using NJsonSchema;
 using RiverBooks.Books;
 using RiverBooks.OrderProcessing;
+using RiverBooks.SharedKernel;
 using RiverBooks.Users;
 using Serilog;
 using System.Reflection;
@@ -23,10 +24,11 @@ builder.Services.AddAuthorization();
 //builder.Services.AddOpenApi();
 builder.Services.AddFastEndpoints().SwaggerDocument();
 List<Assembly> mediatRAssemblies = [typeof(Program).Assembly];
-builder.Services.AddBookServices(builder.Configuration, logger, mediatRAssemblies);
+builder.Services.AddBooksModuleServices(builder.Configuration, logger, mediatRAssemblies);
 builder.Services.AddOrderProcessingModuleServices(builder.Configuration, logger, mediatRAssemblies);
 builder.Services.AddUsersModuleServices(builder.Configuration, logger, mediatRAssemblies);
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies.ToArray()));
+builder.Services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
 
 var app = builder.Build();
 

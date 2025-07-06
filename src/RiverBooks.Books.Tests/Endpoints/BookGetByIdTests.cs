@@ -2,6 +2,7 @@
 using FastEndpoints.Testing;
 using FluentAssertions;
 using RiverBooks.Books.Endpoints;
+using RiverBooks.Books.UseCases;
 
 namespace RiverBooks.Books.Tests.Endpoints;
 

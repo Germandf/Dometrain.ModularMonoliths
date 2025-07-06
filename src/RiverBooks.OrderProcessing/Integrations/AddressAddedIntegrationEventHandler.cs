@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using RiverBooks.OrderProcessing.Domain;
+using RiverBooks.OrderProcessing.Interfaces;
 using RiverBooks.Users.Contracts;
 
 namespace RiverBooks.OrderProcessing.Integrations;
