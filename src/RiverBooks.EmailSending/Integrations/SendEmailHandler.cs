@@ -4,18 +4,20 @@ using RiverBooks.EmailSending.Contracts;
 
 namespace RiverBooks.EmailSending.Integrations;
 
-internal class SendEmailHandler(IEmailSender emailSender)
-    : IRequestHandler<SendEmailCommand, Result<Guid>>
+internal class SendEmailHandler(IOutboxService outboxService) : IRequestHandler<SendEmailCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(SendEmailCommand request, CancellationToken cancellationToken)
     {
-        await emailSender.SendEmailAsync(
-            request.To,
-            request.From,
-            request.Subject,
-            request.Body,
-            cancellationToken);
+        var email = new EmailOutbox
+        {
+            To = request.To,
+            From = request.From,
+            Subject = request.Subject,
+            Body = request.Body,
+        };
 
-        return Guid.Empty;
+        await outboxService.QueueEmail(email);
+
+        return email.Id;
     }
 }

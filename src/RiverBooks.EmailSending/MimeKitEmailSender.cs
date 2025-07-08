@@ -21,7 +21,7 @@ public class MimeKitEmailSender(
             Body = new TextPart("plain") { Text = body }
         };
         await client.SendAsync(message, cancellationToken);
-        await client.DisconnectAsync(true, cancellationToken);
+        await client.DisconnectAsync(false, cancellationToken);
         logger.LogInformation("Email sent successfully");
     }
 }
